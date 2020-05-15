@@ -16,6 +16,9 @@ def look_up_group(nx_group):
 
 filename = "C:\\Users\\scman1\\Desktop\\MantisData\\TrainingCourseData\\PG3_4871_event.nxs"
 
+# smallest nexus file from training course
+filename = "C:\\Users\\scman1\\Desktop\\MantisData\\TrainingCourseData\\LogWS.nxs"
+
 with h5py.File(filename, "r") as nx:
     print(f"file: {nx.filename}")
     signal_found = False
