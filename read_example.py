@@ -5,18 +5,14 @@ import numpy
 
 # recursively loop on all groups until data is found and print its contents
 
-def look_up_groups(nx_group):
+def look_up_dataset_names(nx_group):
     groups=[]
     for group_key in nx_group.keys():
         #stop condition
         if type(nx_group[group_key]) != h5py._hl.group.Group:
-    #        print("other ", group_key, nx_group[group_key].name, nx_group[group_key].shape, nx_group[group_key].dtype)
-    #        print(nx_group[group_key][()])
             groups.append(nx_group[group_key].name)
-    #        print(type(nx_group[group_key][()]))
         elif type(nx_group[group_key]) == h5py._hl.group.Group:
-            groups += look_up_groups(nx_group[group_key])
-    #print("Groups: ", groups)
+            groups += look_up_dataset_names(nx_group[group_key])
     return groups
 
 filename = "C:\\Users\\scman1\\Desktop\\MantisData\\TrainingCourseData\\PG3_4871_event.nxs"
@@ -27,9 +23,9 @@ filename = "C:\\Users\\scman1\\Desktop\\MantisData\\TrainingCourseData\\LogWS.nx
 with h5py.File(filename, "r") as nx:
     print(f"file: {nx.filename}")
     signal_found = False
-    nx_groups = look_up_groups(nx)
+    nx_groups = look_up_dataset_names(nx)
     for grp in nx_groups:
-        print(nx[grp][()])
+        print("***", grp, "***\n", nx[grp][()])
 ##    # find the default NXentry group
 ##    print(dir(nx.attrs))
 ##    print(nx.attrs.items())
