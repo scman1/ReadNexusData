@@ -1,18 +1,23 @@
 # read nexus file
 # from https://manual.nexusformat.org/examples/h5py/
 import h5py
+import numpy
 
 # recursively loop on all groups until data is found and print its contents
 
-def look_up_group(nx_group):
+def look_up_groups(nx_group):
+    groups=[]
     for group_key in nx_group.keys():
-        #stop condition 
+        #stop condition
         if type(nx_group[group_key]) != h5py._hl.group.Group:
-            print("other ", group_key, nx_group[group_key].name, nx_group[group_key].shape, nx_group[group_key].dtype)
-            print(nx_group[group_key][()])
-            print(type(nx_group[group_key][()]))
+    #        print("other ", group_key, nx_group[group_key].name, nx_group[group_key].shape, nx_group[group_key].dtype)
+    #        print(nx_group[group_key][()])
+            groups.append(nx_group[group_key].name)
+    #        print(type(nx_group[group_key][()]))
         elif type(nx_group[group_key]) == h5py._hl.group.Group:
-            look_up_group(nx_group[group_key])
+            groups += look_up_groups(nx_group[group_key])
+    #print("Groups: ", groups)
+    return groups
 
 filename = "C:\\Users\\scman1\\Desktop\\MantisData\\TrainingCourseData\\PG3_4871_event.nxs"
 
@@ -22,7 +27,9 @@ filename = "C:\\Users\\scman1\\Desktop\\MantisData\\TrainingCourseData\\LogWS.nx
 with h5py.File(filename, "r") as nx:
     print(f"file: {nx.filename}")
     signal_found = False
-    look_up_group(nx)
+    nx_groups = look_up_groups(nx)
+    for grp in nx_groups:
+        print(nx[grp][()])
 ##    # find the default NXentry group
 ##    print(dir(nx.attrs))
 ##    print(nx.attrs.items())
