@@ -20,10 +20,19 @@ filename = "C:\\Users\\scman1\\Desktop\\MantisData\\TrainingCourseData\\PG3_4871
 # smallest nexus file from training course
 filename = "C:\\Users\\scman1\\Desktop\\MantisData\\TrainingCourseData\\LogWS.nxs"
 
+ignore_names = ['definition', 'definition_local', 'instrument', 'sample',
+                'MantidEnvironment','run_start','title']
+
 with h5py.File(filename, "r") as nx:
     print(f"file: {nx.filename}")
     signal_found = False
     nx_set_names = look_up_dataset_names(nx)
     for grp in nx_set_names:
-        print("***", grp, "***\n", nx[grp][()])
+        skip = False
+        for ignore in ignore_names:
+            if ignore in grp:
+                skip = True
+        if not skip:
+            if len(nx[grp][()]) > 1:
+                print("***", grp, len(nx[grp][()]) ,"***\n", nx[grp][()])
 
