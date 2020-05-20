@@ -41,6 +41,7 @@ filename = "C:\\Users\\scman1\\Desktop\\MantisData\\TrainingCourseData\\MUSR0001
 
 # smallest nexus file from training course
 ## filename = "C:\\Users\\scman1\\Desktop\\MantisData\\TrainingCourseData\\LogWS.nxs"
+filename = "C:\\Users\\scman1\\Desktop\\MantisData\\TrainingCourseData\\11001_deltaE.nxs"
 
 with h5py.File(filename, "r") as nx:
     print(f"file: {nx.filename}")
@@ -54,34 +55,9 @@ for indx, name in enumerate(nx_set_names):
 
 with h5py.File(filename, "r") as nx:
     nx_tree = get_tree(nx)
+    # lookup if the nx file contains workspace group with four elements then it is a workspace2d file
     
 print_tree(nx_tree)
 
+# plottable data in mantid workspace2D is stored in workspace elements above root level
 
-
-class NX_Tree:
-    def __init__(self, label, tree_path, groups=None, data_entries=None):
-        self.label = label
-        self.tree_path  = tree_path
-        self.groups = groups                # will contain a list of groups
-        self.data_entries = data_entries    # will contain a list of data entries
-
-    def __str__(self):
-        return str(self.label)
-    
-
-# recursively traverse tree and build tree model
-# using NX_Tree
-def build_nx_tree(nx_group, parent = None):
-    nx_tree = None
-    for group_key in nx_group.keys():        
-        if parent == None:
-            nx_tree = NX_Tree(group_key,nx_group[group_key].name,[],[])
-        #stop condition
-        if type(nx_group[group_key]) == h5py._hl.dataset.Dataset:
-            nx_entry = NX_Tree(group_key,nx_group[group_key].name)
-            nx_tree.data_entries.append(nx_entry)
-        elif type(nx_group[group_key]) == h5py._hl.group.Group:
-            nx_group = NX_Tree(group_key,nx_group[group_key].name)
-            nx_tree.groups.append(build_nx_tree(nx_group[group_key],nx_tree))
-    return nx_tree
