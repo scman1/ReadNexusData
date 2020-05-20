@@ -16,10 +16,7 @@ def look_up_dataset_names(nx_group):
 
 # recursively traverse tree and build tree model
 def get_tree(nx_group):
-    dataset_names = []
-    nx_tree = {}
-    datasets = {}
-    data_groups = {}
+    nx_tree={}
     for group_key in nx_group.keys():
         #stop condition
         if type(nx_group[group_key]) == h5py._hl.dataset.Dataset:
