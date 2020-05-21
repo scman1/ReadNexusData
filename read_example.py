@@ -56,5 +56,5 @@ with h5py.File(filename, "r") as nx:
     
 print_tree(nx_tree)
 
-# plottable data in mantid workspace2D is stored in workspace elements above root level
+# plottable data in mantid workspace2D is stored in workspace root child element
 

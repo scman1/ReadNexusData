@@ -1,7 +1,11 @@
 # read nexus file
 # from https://manual.nexusformat.org/examples/h5py/
+
+#library for reading nexus HDF5 data files 
 import h5py
-import numpy
+
+# ploting library
+import matplotlib.pyplot as plt
 
 # recursively loop on all groups until data is found and print its contents
 
@@ -30,17 +34,40 @@ filename = "C:\\Users\\scman1\\Desktop\\MantisData\\TrainingCourseData\\PG3_4871
 
 # smallest nexus file from training course
 filename = "C:\\Users\\scman1\\Desktop\\MantisData\\TrainingCourseData\\LogWS.nxs"
-
+filename = "C:\\Users\\scman1\\Desktop\\MantisData\\TrainingCourseData\\MUSR00015189_cropped.nxs"
 # in mantid 2D workspaces, the plottable data is in the group called workspace
 
 data_groups = ['workspace']
 
 with h5py.File(filename, "r") as nx:
     print(f"file: {nx.filename}")
-    signal_found = False
+    
     nx_tree = get_tree(nx)
+    # the first group is the root of the nexus file
     root = list(nx_tree.keys())[0]
     # Mantid workspace2D stores data in workspace root child element
-    print (nx_tree[root][0]['workspace'][0])
-    if signal_found:
-       print("***", grp, len(nx[grp][()]) ,"***\n", nx[grp][()])           
+    # look if the groups below root contain workspace
+    if "workspace" in nx_tree[root][0].keys():
+        print (nx_tree[root][0]['workspace'][0])
+        print (len(nx_tree[root][0]['workspace'][0]), "elements in workspace group")
+        values_path = nx_tree[root][0]['workspace'][0]['values'][0]
+        axis1_path = nx_tree[root][0]['workspace'][0]['axis1'][0]
+        axis2_path = nx_tree[root][0]['workspace'][0]['axis2'][0]
+        errors_path = nx_tree[root][0]['workspace'][0]['errors'][0]
+        y_vals = nx[values_path][()][0] # plottable values
+        a1_vals = nx[axis1_path][()] # bucket markers
+        a2_vals = nx[axis2_path][()]
+        er_vals = nx[errors_path][()] # error values
+        # get the middle of buckets
+        lower = a1_vals[()][:-1]
+        upper = a1_vals[()][1:]
+        mid_b = lower + (upper - lower)/2
+        print (y_vals, mid_b)
+        # plot(x,y, label)
+        plt.plot(mid_b, y_vals, label='signal')
+        plt.xlabel('x')
+        plt.ylabel('counts')
+        plt.legend() # include the leyend in the plot
+        plt.grid(color='r', linestyle=':', linewidth=1) #show and format grid
+        plt.title(nx.filename)
+        plt.show()
