@@ -3,6 +3,8 @@
 import h5py
 import numpy
 
+# library to get base path for current user
+import os
 # recursively loop on all groups until data is found and print its contents
 def look_up_dataset_names(nx_group):
     dataset_names = []
@@ -34,11 +36,11 @@ def print_tree(nx_tree, level = 0):
         else:
             print('\t'*level, node, "data =",  nx_tree[node][0])
 
-filename = "C:\\Users\\scman1\\Desktop\\MantisData\\TrainingCourseData\\MUSR00015189_cropped.nxs"
+# os.environ['USERPROFILE'] retrieves the base path for current user
+# in windows: C:/users/current_user/
+filename = os.environ['USERPROFILE'] + '\Desktop\MantisData\TrainingCourseData' + "\MUSR00015189_cropped.nxs"
 
-# smallest nexus file from training course
-## filename = "C:\\Users\\scman1\\Desktop\\MantisData\\TrainingCourseData\\LogWS.nxs"
-filename = "C:\\Users\\scman1\\Desktop\\MantisData\\TrainingCourseData\\11001_deltaE.nxs"
+filename = os.environ['USERPROFILE'] + '\Desktop\MantisData\TrainingCourseData' + r"\11001_deltaE.nxs"
 
 with h5py.File(filename, "r") as nx:
     print(f"file: {nx.filename}")

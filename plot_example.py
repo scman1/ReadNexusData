@@ -7,6 +7,9 @@ import h5py
 # ploting library
 import matplotlib.pyplot as plt
 
+# library to get base path for current user
+import os
+
 # recursively loop on all groups until data is found and print its contents
 
 def look_up_dataset_names(nx_group):
@@ -30,13 +33,14 @@ def get_tree(nx_group):
             nx_tree[group_key] = [get_tree(nx_group[group_key]), "group"]
     return nx_tree
 
-filename = "C:\\Users\\scman1\\Desktop\\MantisData\\TrainingCourseData\\PG3_4871_event.nxs"
+# os.environ['USERPROFILE'] retrieves the base path for current user
+# in windows: C:/users/current_user/
+filename = os.environ['USERPROFILE'] + '\Desktop\MantisData\TrainingCourseData' + r"\PG3_4871_event.nxs"
+filename = os.environ['USERPROFILE'] + '\Desktop\MantisData\TrainingCourseData' + r"\LogWS.nxs"
+filename = os.environ['USERPROFILE'] + '\Desktop\MantisData\TrainingCourseData' + r"\MUSR00015189_cropped.nxs"
 
-# smallest nexus file from training course
-filename = "C:\\Users\\scman1\\Desktop\\MantisData\\TrainingCourseData\\LogWS.nxs"
-filename = "C:\\Users\\scman1\\Desktop\\MantisData\\TrainingCourseData\\MUSR00015189_cropped.nxs"
+
 # in mantid 2D workspaces, the plottable data is in the group called workspace
-
 data_groups = ['workspace']
 
 with h5py.File(filename, "r") as nx:
@@ -62,7 +66,7 @@ with h5py.File(filename, "r") as nx:
         lower = a1_vals[()][:-1]
         upper = a1_vals[()][1:]
         mid_b = lower + (upper - lower)/2
-        print (y_vals, mid_b)
+        print ("y vals:", y_vals, "\nmid bin:", mid_b, "\na2:", a2_vals,"\nerrors:", er_vals)
         # plot(x,y, label)
         plt.plot(mid_b, y_vals, label='signal')
         plt.xlabel('x')

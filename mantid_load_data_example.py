@@ -4,6 +4,11 @@ from mantid.simpleapi import *
 import matplotlib.pyplot as plt
 import numpy as np
 
+# library to get base path for current user
+import os
+
+
+
 # import library for managing files
 from pathlib import Path
 import sys
@@ -16,8 +21,10 @@ def get_files_list(source_dir, file_pattern = '*.nxs'):
         i_counter += 1
         files_list.append(filepath)
     return files_list
-
-files_dir = 'C:/Users/scman1/Desktop/MantisData/TrainingCourseData/'
+    
+# os.environ['USERPROFILE'] retrieves the base path for current user
+# in windows: C:/users/current_user/
+files_dir = os.environ['USERPROFILE'] + '\Desktop\MantisData\TrainingCourseData' 
 
 files_path= Path(files_dir)
 files_list = get_files_list(files_path)
