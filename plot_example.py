@@ -35,9 +35,9 @@ def get_tree(nx_group):
 
 # os.environ['USERPROFILE'] retrieves the base path for current user
 # in windows: C:/users/current_user/
-filename = os.environ['USERPROFILE'] + '\Desktop\MantisData\TrainingCourseData' + r"\PG3_4871_event.nxs"
-filename = os.environ['USERPROFILE'] + '\Desktop\MantisData\TrainingCourseData' + r"\LogWS.nxs"
-filename = os.environ['USERPROFILE'] + '\Desktop\MantisData\TrainingCourseData' + r"\MUSR00015189_cropped.nxs"
+filename = os.environ['USERPROFILE'] + '\Desktop\MantidData\TrainingCourseData' + r"\PG3_4871_event.nxs"
+filename = os.environ['USERPROFILE'] + '\Desktop\MantidData\TrainingCourseData' + r"\LogWS.nxs"
+filename = os.environ['USERPROFILE'] + '\Desktop\MantidData\TrainingCourseData' + r"\MUSR00015189_cropped.nxs"
 
 
 # in mantid 2D workspaces, the plottable data is in the group called workspace
