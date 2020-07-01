@@ -38,11 +38,7 @@ def print_tree(nx_tree, level = 0):
 
 # os.environ['USERPROFILE'] retrieves the base path for current user
 # in windows: C:/users/current_user/
-filename = os.environ['USERPROFILE'] + '\Desktop\MantidData\TrainingCourseData' + "\MUSR00015189_cropped.nxs"
-
-filename = os.environ['USERPROFILE'] + '\Desktop\MantidData\TrainingCourseData' + r"\11001_deltaE.nxs"
-
-#filename = os.environ['USERPROFILE'] + '\Desktop\DiamondData\nexus_examples' + r"\MoKedge_1_15.nxs"
+filename = os.environ['USERPROFILE'] + '\Desktop\DiamondData\examples' + r"\Rh4CO_pr_021.nxs"
 
 with h5py.File(filename, "r") as nx:
     print(f"file: {nx.filename}")
