@@ -19,3 +19,8 @@ These examples try to show:
    * Read nexus data: read_diamond.py (python script)
    * Read and plot: plot_diamond.py (python script)
    * Read and process XAS: process_diamond.py (python script)
+
+## Motivation
+The work for developing the scripts and notebooks in this repository are part of the UK Catalysis Hub Phase II, Core.
+## Funding
+“UK Catalysis Hub is kindly thanked for resources and support provided via our membership of the UK Catalysis Hub Consortium and funded by EPSRC grant:  EP/R026939/1, EP/R026815/1, EP/R026645/1, EP/R027129/1 or EP/M013219/1(biocatalysis))”
